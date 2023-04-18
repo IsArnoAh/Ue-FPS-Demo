@@ -64,10 +64,10 @@ protected:
 	void StartRush();
 	void StopRush();
 	bool bRush;
-	float DefaultForwardSpeed=400.0f;
+	float DefaultForwardSpeed=300.0f;
 	float RushForwardSpeed=600.0f;
-	float DefaultRightSpeed=100.0f;
-	float RushRightSpeed=200.0f;
+	float DefaultRightSpeed=200.0f;
+	float RushRightSpeed=300.0f;
 	
 	
 	UCharacterMovementComponent* MovementComponent=GetCharacterMovement();

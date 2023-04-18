@@ -33,5 +33,9 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+	//子弹参数设置
+	float DefaultInitialSpeed=9000.0f;
+	float DefaultGravity=0.05f;
 };
 

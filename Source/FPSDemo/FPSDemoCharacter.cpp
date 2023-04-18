@@ -117,14 +117,12 @@ void AFPSDemoCharacter::MoveForward(float Value)
 		if (bRush)
 		{
 			MovementComponent->MaxWalkSpeed=RushForwardSpeed;
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Hello World!"));
 			AddMovementInput(GetActorForwardVector(),Value);
 			
 		}
 		else
 		{
 			MovementComponent->MaxWalkSpeed=DefaultForwardSpeed;
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Hello !"));
 			AddMovementInput(GetActorForwardVector(), Value);
 		}
 		
