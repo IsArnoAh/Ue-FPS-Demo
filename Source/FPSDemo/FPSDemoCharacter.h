@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "FPSDemoCharacter.generated.h"
 
 class UInputComponent;
@@ -60,6 +61,17 @@ protected:
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void TurnAtRate(float Rate);
+	void StartRush();
+	void StopRush();
+	bool bRush;
+	float DefaultForwardSpeed=400.0f;
+	float RushForwardSpeed=600.0f;
+	float DefaultRightSpeed=100.0f;
+	float RushRightSpeed=200.0f;
+	
+	
+	UCharacterMovementComponent* MovementComponent=GetCharacterMovement();
+
 
 	/**
 	 * Called via input to turn look up/down at a given rate.
@@ -98,6 +110,7 @@ public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
+	
+	
 };
 

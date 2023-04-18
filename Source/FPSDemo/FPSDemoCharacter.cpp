@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/InputSettings.h"
 
 
@@ -54,6 +55,9 @@ void AFPSDemoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	// Bind jump events
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	//冲刺绑定
+	PlayerInputComponent->BindAction("Rush",IE_Pressed,this,&AFPSDemoCharacter::StartRush);
+	PlayerInputComponent->BindAction("Rush",IE_Released,this,&AFPSDemoCharacter::StopRush);
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("PrimaryAction", IE_Pressed, this, &AFPSDemoCharacter::OnPrimaryAction);
@@ -110,7 +114,22 @@ void AFPSDemoCharacter::MoveForward(float Value)
 	if (Value != 0.0f)
 	{
 		// add movement in that direction
-		AddMovementInput(GetActorForwardVector(), Value);
+		if (bRush)
+		{
+			MovementComponent->MaxWalkSpeed=RushForwardSpeed;
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Hello World!"));
+			AddMovementInput(GetActorForwardVector(),Value);
+			
+		}
+		else
+		{
+			MovementComponent->MaxWalkSpeed=DefaultForwardSpeed;
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Hello !"));
+			AddMovementInput(GetActorForwardVector(), Value);
+		}
+		
+		
+		
 	}
 }
 
@@ -119,7 +138,17 @@ void AFPSDemoCharacter::MoveRight(float Value)
 	if (Value != 0.0f)
 	{
 		// add movement in that direction
-		AddMovementInput(GetActorRightVector(), Value);
+		if (bRush)
+		{
+			MovementComponent->MaxWalkSpeed=RushRightSpeed;
+			AddMovementInput(GetActorRightVector(), Value);
+		}
+		else
+		{
+			MovementComponent->MaxWalkSpeed=DefaultRightSpeed;
+			AddMovementInput(GetActorRightVector(), Value);
+		}
+		
 	}
 }
 
@@ -134,6 +163,16 @@ void AFPSDemoCharacter::LookUpAtRate(float Rate)
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
+void AFPSDemoCharacter::StartRush()
+{
+	bRush=true;
+}
+void AFPSDemoCharacter::StopRush()
+{
+	bRush=false;
+}
+
+
 
 bool AFPSDemoCharacter::EnableTouchscreenMovement(class UInputComponent* PlayerInputComponent)
 {
