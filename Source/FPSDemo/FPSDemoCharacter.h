@@ -61,6 +61,7 @@ protected:
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void TurnAtRate(float Rate);
+	//冲刺功能函数和参数声明
 	void StartRush();
 	void StopRush();
 	bool bRush;
@@ -68,6 +69,7 @@ protected:
 	float RushForwardSpeed=600.0f;
 	float DefaultRightSpeed=200.0f;
 	float RushRightSpeed=300.0f;
+	
 	
 	
 	UCharacterMovementComponent* MovementComponent=GetCharacterMovement();
