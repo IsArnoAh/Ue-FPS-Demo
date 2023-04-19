@@ -58,6 +58,10 @@ void AFPSDemoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	//冲刺绑定
 	PlayerInputComponent->BindAction("Rush",IE_Pressed,this,&AFPSDemoCharacter::StartRush);
 	PlayerInputComponent->BindAction("Rush",IE_Released,this,&AFPSDemoCharacter::StopRush);
+	//聚焦绑定
+	PlayerInputComponent->BindAction("Focus",IE_Pressed,this,&AFPSDemoCharacter::StartFocus);
+	PlayerInputComponent->BindAction("Focus",IE_Released,this,&AFPSDemoCharacter::StopFocus);
+	
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("PrimaryAction", IE_Pressed, this, &AFPSDemoCharacter::OnPrimaryAction);
@@ -107,6 +111,19 @@ void AFPSDemoCharacter::EndTouch(const ETouchIndex::Type FingerIndex, const FVec
 		return;
 	}
 	TouchItem.bIsPressed = false;
+}
+
+void AFPSDemoCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (bFocus)
+	{
+		FirstPersonCameraComponent->SetFieldOfView(60.0f);
+	}
+	else
+	{
+		FirstPersonCameraComponent->SetFieldOfView(90.0f);
+	}
 }
 
 void AFPSDemoCharacter::MoveForward(float Value)
@@ -169,7 +186,15 @@ void AFPSDemoCharacter::StopRush()
 {
 	bRush=false;
 }
+void AFPSDemoCharacter::StartFocus()
+{
+	bFocus=true;
+}
 
+void AFPSDemoCharacter::StopFocus()
+{
+	bFocus=false;
+}
 
 
 bool AFPSDemoCharacter::EnableTouchscreenMovement(class UInputComponent* PlayerInputComponent)

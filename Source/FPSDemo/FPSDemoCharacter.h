@@ -36,6 +36,7 @@ public:
 
 protected:
 	virtual void BeginPlay();
+	virtual void Tick(float DeltaTime) override;
 
 public:
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
@@ -69,8 +70,10 @@ protected:
 	float RushForwardSpeed=600.0f;
 	float DefaultRightSpeed=200.0f;
 	float RushRightSpeed=300.0f;
-	
-	
+	//聚焦功能
+	void StartFocus();
+	void StopFocus();
+	bool bFocus;
 	
 	UCharacterMovementComponent* MovementComponent=GetCharacterMovement();
 
